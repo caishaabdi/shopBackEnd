@@ -1,7 +1,6 @@
 const User = require("../models/UsersModel");
 const jwt = require("jsonwebtoken");
 const CryptoJs = require('crypto-js')
-
 module.exports = {
 
     createUser: async (req, res) => {
@@ -74,7 +73,7 @@ module.exports = {
             const userToken = jwt.sign(
                 { id: user._id },
                 process.env.JWT_SEC,
-                { expiresIn: "1h" }
+                { expiresIn: "10d" }
             );
 
             // Destructure the user to remove sensitive data
@@ -90,3 +89,5 @@ module.exports = {
 
 
 }
+
+

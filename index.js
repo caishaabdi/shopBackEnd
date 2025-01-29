@@ -8,7 +8,7 @@ const userRouter = require('./routers/userRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const CartRouter = require('./routers/CartRouter')
 dotenv.config()
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3005;
 mongoose.connect(process.env.MONGO_URL).then(() => console.log("Db Connected")).catch((err) => console.log(err))
 app.get('/', (req, res) => res.send('Hello World!'))
 
