@@ -9,6 +9,21 @@ module.exports = {
             res.status(500).json("Failed To Create Product")
         }
     },
+    // Delete Product by ID
+    deleteProduct: async (req, res) => {
+        const { id } = req.params; // Assuming you pass the product ID in the URL params
+        try {
+            const product = await Product.findByIdAndDelete(id);
+
+            if (!product) {
+                return res.status(404).json("Product Not Found");
+            }
+
+            res.status(200).json("Product Deleted");
+        } catch (error) {
+            res.status(500).json("Failed To Delete Product");
+        }
+    },
 
     getAllProducts: async (req, res) => {
         try {

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/UsersModel'); // Make sure the model path is correct
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization']; // Correct way to access Authorization header
+    const authHeader = req.headers['token']; // Correct way to access Authorization header
 
     if (authHeader) {
         const token = authHeader.split("Bearer ")[1]; // Get the token part after 'Bearer'

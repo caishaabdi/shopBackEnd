@@ -8,9 +8,9 @@ module.exports = {
         const { username, email, password, location } = req.body;
 
         // Basic validation to ensure required fields are present
-        if (!username || !email || !password || !location) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
+        // if (!username || !email || !password || !location) {
+        //     return res.status(400).json({ message: "All fields are required" });
+        // }
 
         try {
             // Check if the user already exists (email is unique)

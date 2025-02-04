@@ -8,7 +8,10 @@ const userSchema = new mongoose.Schema({
         // match: [/@/, 'Please enter a valid email address'] // Only check for @ symbol in the email
     },
     password: { type: String, required: true },
-    location: { type: String, required: true }
+    location: {
+        type: String, required: false
+
+    }
 },
     {
         timestamps: true
