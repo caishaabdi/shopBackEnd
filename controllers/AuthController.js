@@ -73,7 +73,7 @@ module.exports = {
             const userToken = jwt.sign(
                 { id: user._id },
                 process.env.JWT_SEC,
-                { expiresIn: "10d" }
+                { expiresIn: "30d" }
             );
 
             // Destructure the user to remove sensitive data
