@@ -43,21 +43,25 @@ module.exports = {
     },
 
     getCart: async (req, res) => {
-        const userId = req.user.id;
+        const userId = req.user.id; // Getting user ID from the request
         try {
-            // Find the user's cart
+            // Find the user's cart, populate the cartItem fields with relevant data
             const cart = await Cart.findOne({ userId })
-                .populate('products.cartItem', "_id name imageUrl price category")
+                .populate('products.cartItem', "_id name imageUrl price category");
 
+            // If no cart is found for the user, send a 404 response
             if (!cart) {
                 return res.status(404).json({ message: 'Cart not found' });
             }
 
+            // Return the populated cart data
             res.status(200).json(cart);
         } catch (error) {
-            res.status(500).json(error);
+            // Handle server error and send a 500 response
+            res.status(500).json({ message: 'Failed to load cart items, please try again later.' });
         }
     },
+
 
     deleteCartItem: async (req, res) => {
         const cartItemId = req.params.cartItem;

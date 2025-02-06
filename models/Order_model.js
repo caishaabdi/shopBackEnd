@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema({
 
     UserId: { type: String, required: true },
     customerId: { type: String, required: true, },
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+    productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     quantity: { type: Number, required: true },
     subtotal: { type: Number, required: true },
     delivery_status: { type: String, required: true, default: "pending" },
@@ -15,5 +15,5 @@ const OrderSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
-module.express = mongoose.model("Order", OrderSchema);
+const order = mongoose.model("Order", OrderSchema);
+module.exports = order;
