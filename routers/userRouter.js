@@ -11,5 +11,6 @@ router.delete('/:id', verifyToken, UserController.deleteUser);
 
 // Define the route for getting all users (protected route)
 router.get('/all', verifyToken, UserController.getAllUsers);
+router.put('/update', verifyToken, UserController.updateUserDetails);
 
 module.exports = router;
