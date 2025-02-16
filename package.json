@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon backend_shop_app /index.js"
+    "start": "nodemon backend_shop_app /index.js",
+    "dev": "node index.js"
   },
   "keywords": [],
   "author": "",
