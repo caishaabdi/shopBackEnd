@@ -39,7 +39,7 @@ const deleteUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         // Retrieve all users from the database
-        const users = await User.find();
+        const users = await User.find().sort({ createdAt: -1 })
 
         // If no users are found, return a message
         if (!users || users.length === 0) {
