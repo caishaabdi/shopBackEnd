@@ -1,17 +1,15 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-// Define schema for the User model
+
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },
+    username: {
+        type: String, required: true
+    },
     email: {
         type: String, required: true, unique: true,
-        // match: [/@/, 'Please enter a valid email address'] // Only check for @ symbol in the email
     },
-    // phone: {
-    //     type: Number,
-    //     required: true
-    // },
-    password: { type: String, required: true },
+    password: {
+        type: String, required: true
+    },
     location: {
         type: String, required: false
 

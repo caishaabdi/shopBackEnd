@@ -110,12 +110,10 @@ const registerUser = async (req, res) => {
     try {
         const { email, password, username, location } = req.body;
 
-        // Check if the email or username already exists
-        const isUserExists = await User.findOne({
-            email // Checks if either email or username already exists
-        });
+        // Check if the email already exists
+        const isUserExists = await User.findOne({ email });
         if (isUserExists) {
-            return res.status(400).json("Email or username already exists");
+            return res.status(400).json({ message: "Email is already registered" });
         }
 
         // Hash the password before saving to the database
@@ -136,10 +134,10 @@ const registerUser = async (req, res) => {
         registeredUser.password = undefined;
 
         // Return a success response
-        return res.status(201).json(registeredUser);
+        return res.status(201).json({ message: "User registered successfully", user: registeredUser });
     } catch (err) {
         console.error("Error at registering user:", err.message);
-        return res.status(500).json({ message: "Something went wrong: " + err.message });
+        return res.status(500).json({ message: "Something went wrong during registration" });
     }
 };
 
@@ -149,15 +147,15 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
 
         // Check if the user exists by email
-        const isUserExists = await User.findOne({ email }); // Ensure password field is included
+        const isUserExists = await User.findOne({ email });
         if (!isUserExists) {
-            return res.status(400).json("Invalid email, please provide a valid email");
+            return res.status(400).json({ message: "Invalid email, please provide a valid email" });
         }
 
         // Check if the password is correct
         const isPasswordCorrect = await bcrypt.compare(password, isUserExists.password);
         if (!isPasswordCorrect) {
-            return res.status(400).json("Incorrect password");
+            return res.status(400).json({ message: "Incorrect password" });
         }
 
         // Token generation
@@ -175,10 +173,10 @@ const loginUser = async (req, res) => {
         isUserExists.password = undefined;
 
         // Send success response with user data (excluding password)
-        return res.status(200).json({ ...isUserExists.toJSON(), expiresIn });
+        return res.status(200).json({ message: "Login successful", user: isUserExists, expiresIn });
     } catch (err) {
         console.error("Error at LoginUser:", err);
-        return res.status(400).json({ message: err.message });
+        return res.status(400).json({ message: "An error occurred during login", error: err.message });
     }
 };
 

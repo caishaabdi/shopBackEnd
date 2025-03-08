@@ -1,5 +1,5 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/UsersModel'); // Import User model
-const bcrypt = require('bcrypt');
 
 // Get a user by their ID from the JWT token
 const getUser = async (req, res) => {
@@ -15,7 +15,7 @@ const getUser = async (req, res) => {
         res.status(200).json(userData); // Return user data without sensitive fields
     } catch (error) {
         console.error("Error retrieving user:", error);  // Log for debugging
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Error retrieving user", error: error.message });
     }
 };
 
@@ -33,46 +33,38 @@ const deleteUser = async (req, res) => {
         res.status(200).json({ message: 'User successfully deleted.' });
     } catch (error) {
         console.error("Error deleting user:", error);  // Log for debugging
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Error deleting user", error: error.message });
     }
 };
 
 // Get all users from the database
-// const getAllUsers = async (req, res) => {
-//     try {
-//         // Retrieve all users from the database
-//         const users = await User.find({});
-
-//         // If no users are found, return a message
-//         if (users.length === 0) {
-//             return res.status(404).json({ message: "No users found" });
-//         }
-
-//         // Destructure sensitive fields (password, __v, etc.) from each user
-//         const usersData = users.map(user => {
-//             const { __v, updatedAt, createdAt, password, ...userData } = user._doc;
-//             return userData; // Return the sanitized user data
-//         });
-
-//         // Return the list of users without sensitive data
-//         res.status(200).json(usersData); // Sending the users data
-//         console.log(usersData); // Optional: Log the users data for debugging
-//     } catch (error) {
-//         console.error("Error fetching users:", error);  // Log for debugging
-//         res.status(500).json({ message: "Failed to retrieve users", error: error.message });
-//     }
-// };
-
-
 const getAllUsers = async (req, res) => {
-
     try {
         const users = await User.find({});
-        res.json(users);
+
+        // Remove sensitive data from all users
+        const usersData = users.map(user => {
+            const { password, __v, updatedAt, createdAt, ...userData } = user._doc;
+            return userData; // Return sanitized user data
+        });
+
+        res.status(200).json(usersData); // Sending the sanitized users data
     } catch (error) {
-        res.json({ message: error.message });
+        console.error("Error fetching users:", error);  // Log for debugging
+        res.status(500).json({ message: "Failed to retrieve users", error: error.message });
     }
-}
+};
+
+// const getAllUsers = async (req, res) => {
+
+//     try {
+//         const users = await User.find({});
+//         res.json(users);
+//     } catch (error) {
+//         res.json({ message: error.message });
+//     }
+// }
+
 // Update user details
 const updateUserDetails = async (req, res) => {
     const { username, email, password, location } = req.body;
@@ -106,7 +98,8 @@ const updateUserDetails = async (req, res) => {
         res.status(200).json(updatedUser);
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error updating user:", error);  // Log for debugging
+        res.status(500).json({ message: "Error updating user", error: error.message });
     }
 };
 
