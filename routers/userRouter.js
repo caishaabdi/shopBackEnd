@@ -4,7 +4,7 @@ const { verifyToken } = require('../middleware/verifyToken');    // Verify token
 const router = require('express').Router();
 
 // Define the route for getting the current user
-router.get('/:id', verifyToken, UserController.getUser);
+router.get('/one', verifyToken, UserController.getUser);
 
 // Define the route for deleting the current user
 router.delete('/:id', verifyToken, UserController.deleteUser);
