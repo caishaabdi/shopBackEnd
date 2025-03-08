@@ -6,13 +6,15 @@ const productRouter = require('./routers/product_router')
 const authRoute = require('./routers/AuthRoute')
 const userRouter = require('./routers/userRouter')
 const OrderRouter = require('./routers/OrderRouter')
-const CartRouter = require('./routers/CartRouter')
+const CartRouter = require('./routers/CartRouter');
+const cookieParser = require('cookie-parser');
 dotenv.config()
 const PORT = process.env.PORT || 3005;
 mongoose.connect(process.env.MONGO_URL).then(() => console.log("Db Connected")).catch((err) => console.log(err))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.use(express.json({ limit: '10mb' }));
+app.use(cookieParser());
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use('/api/', authRoute)  //login & register
