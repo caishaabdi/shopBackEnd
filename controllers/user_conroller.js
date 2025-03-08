@@ -5,7 +5,7 @@ const User = require('../models/UsersModel'); // Import User model
 const getUser = async (req, res) => {
     try {
         // Retrieve the user based on the ID from the JWT token
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -23,13 +23,13 @@ const getUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         // Retrieve the user based on the ID from the JWT token
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         // Delete the user from the database
-        await User.findByIdAndDelete(req.user._id);
+        await User.findByIdAndDelete(req.user.id);
         res.status(200).json({ message: 'User successfully deleted.' });
     } catch (error) {
         console.error("Error deleting user:", error);  // Log for debugging
