@@ -7,6 +7,7 @@ const authRoute = require('./routers/AuthRoute')
 const userRouter = require('./routers/userRouter')
 const OrderRouter = require('./routers/OrderRouter')
 const CartRouter = require('./routers/CartRouter');
+const favRoter = require('./routers/FavoriteRouter');
 const cookieParser = require('cookie-parser');
 dotenv.config()
 const PORT = process.env.PORT || 3005;
@@ -22,6 +23,7 @@ app.use('/api/products', productRouter)
 app.use('/api/users/', userRouter)
 app.use('/api/orders/', OrderRouter)
 app.use('/api/cart/', CartRouter)
+app.use('/api/favoriate/', favRoter)
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`))
 

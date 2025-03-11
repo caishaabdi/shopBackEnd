@@ -38,32 +38,32 @@ const deleteUser = async (req, res) => {
 };
 
 // Get all users from the database
-const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find({});
-
-        // Remove sensitive data from all users
-        const usersData = users.map(user => {
-            const { password, __v, updatedAt, createdAt, ...userData } = user._doc;
-            return userData; // Return sanitized user data
-        });
-
-        res.status(200).json(usersData); // Sending the sanitized users data
-    } catch (error) {
-        console.error("Error fetching users:", error);  // Log for debugging
-        res.status(500).json({ message: "Failed to retrieve users", error: error.message });
-    }
-};
-
 // const getAllUsers = async (req, res) => {
-
 //     try {
 //         const users = await User.find({});
-//         res.json(users);
+
+//         // Remove sensitive data from all users
+//         const usersData = users.map(user => {
+//             const { password, __v, updatedAt, createdAt, ...userData } = user._doc;
+//             return userData; // Return sanitized user data
+//         });
+
+//         res.status(200).json(usersData); // Sending the sanitized users data
 //     } catch (error) {
-//         res.json({ message: error.message });
+//         console.error("Error fetching users:", error);  // Log for debugging
+//         res.status(500).json({ message: "Failed to retrieve users", error: error.message });
 //     }
-// }
+// };
+
+const getAllUsers = async (req, res) => {
+
+    try {
+        const users = await User.find({});
+        res.json(users);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
 
 // Update user details
 const updateUserDetails = async (req, res) => {
