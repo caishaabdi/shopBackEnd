@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const FavoriteSchema = new mongoose.Schema({
     id: {
-        type: Number,
+        type: String,
         required: true,
     },
     name: {
